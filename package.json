@@ -1,0 +1,19 @@
+{
+  "name": "gullible-giant",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/netlify": "^6.5.13",
+    "@tailwindcss/vite": "^4.1.11",
+    "astro": "^5.10.1",
+    "axios": "^1.12.2",
+    "resend": "^6.2.0",
+    "tailwindcss": "^4.1.11"
+  }
+}

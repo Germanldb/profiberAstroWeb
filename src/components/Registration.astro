@@ -1,0 +1,104 @@
+---
+import Image from "astro/components/Image.astro";
+import location from "../assets/icons/location_1.png";
+import bosques from "../assets/cobertura/bosque.png";
+import next_prev_icon from "../assets/icons/next_prev_icon.svg";
+// src/components/Registration.astro
+---
+
+<section class="py-10 relative overflow-hidden">
+  <!-- Background image -->
+  <Image
+    src={bosques}
+    alt={"background"}
+    class={"absolute inset-0 w-full h-full object-cover object-center z-10"}
+  />
+  <!-- subtle overlay to improve contrast -->
+  <div class="absolute inset-0 -z-5 bg-black/40"></div>
+
+  <div class="container mx-auto px-4 text-white relative z-10">
+    <!-- Pin de ubicación -->
+    <div class="flex justify-center flex-col items-center">
+        <div class="flex justify-center gap-6 items-end">
+          <div class="flex items-center">
+            <button id="prevCoverageBtn" aria-label="Anterior cobertura" class="p-2">
+              <Image src={next_prev_icon} alt={"Prev icon"} class={"w-auto h-auto rotate-180 hover:cursor-pointer"} />
+            </button>
+          </div>
+          <Image src={location} alt={"location-pin"} class={"w-55 h-60"} />
+          <div class="flex items-center">
+            <button id="nextCoverageBtn" aria-label="Siguiente cobertura" class="p-2">
+              <Image src={next_prev_icon} alt={"Next icon"} class={"w-auto h-auto hover:cursor-pointer"} />
+            </button>
+          </div>
+        </div>
+      <div class="my-6">
+          <p id="coverage-title" class="text-4xl font-bold">Cobertura Wireless</p>
+      </div>
+      <div>
+          <p id="coverage-text" class="coverage-anim is-visible text-center">Aguadilla 90%. Aguada 90% Isabela 90% Quebradillas 70% Camuy 15% <b>(Solo en el área de la costa).</b> <br>San Sebastián 70%. Ańasco 70% Rincón 40% Mayagüez 60% Moca 30%</p>
+      </div>
+    </div>
+    <div class="flex justify-center mt-8">
+      <a class="border-3 border-[#FD3CFC] text-white py-2 px-8 rounded-xl hover:cursor-pointer hover:scale-105 transition duration-200 ease-in-out"
+        href="#" >Valida tu Cobertura</a
+      >
+    </div>
+  </div>
+</section>
+
+  <script>
+    (function () {
+      const texts = [
+        `Aguadilla 90%. Aguada 90% Isabela 90% Quebradillas 70% Camuy 15% (Solo en el área de la costa). San Sebastián 70%. Ańasco 70% Rincón 40% Mayagüez 60% Moca 30%`,
+        `La cobertura 5G de Profiber en toda la isla de Puerto Rico representa un gran avance en conectividad, ofreciendo velocidades ultrarrápidas, menor latencia y una experiencia de navegación más estable para usuarios y empresas. Con esta tecnología, los clientes pueden disfrutar de descargas en segundos, transmisión de contenido en alta definición sin interrupciones y una mejor capacidad para conectar múltiples dispositivos simultáneamente.` 
+      ];
+
+      let idx = 0;
+      const coverageEl = document.getElementById('coverage-text');
+      const titleEl = document.getElementById('coverage-title');
+      const prevBtn = document.getElementById('prevCoverageBtn');
+      const nextBtn = document.getElementById('nextCoverageBtn');
+
+  function animateChange(newIdx: number) {
+        if (!coverageEl) return;
+        // start hide animation
+        coverageEl.classList.remove('is-visible');
+        coverageEl.classList.add('is-hidden');
+
+        // after animation out, change text and animate in
+        setTimeout(() => {
+          idx = newIdx;
+          coverageEl.textContent = texts[idx];
+          if (titleEl) titleEl.textContent = idx === 0 ? 'Cobertura 5G' : 'Cobertura Local';
+          coverageEl.classList.remove('is-hidden');
+          coverageEl.classList.add('is-visible');
+        }, 280); // matches CSS transition duration
+      }
+
+      prevBtn?.addEventListener('click', () => {
+        const newIdx = (idx - 1 + texts.length) % texts.length;
+        animateChange(newIdx);
+      });
+      nextBtn?.addEventListener('click', () => {
+        const newIdx = (idx + 1) % texts.length;
+        animateChange(newIdx);
+      });
+    })();
+  </script>
+
+  <style>
+    .coverage-anim {
+      transition: opacity 280ms cubic-bezier(.22,.9,.35,1), transform 280ms cubic-bezier(.22,.9,.35,1);
+      will-change: opacity, transform;
+      display: inline-block;
+    }
+    .coverage-anim.is-hidden {
+      opacity: 0;
+      transform: translateY(6px) scale(0.995);
+    }
+    .coverage-anim.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  </style>

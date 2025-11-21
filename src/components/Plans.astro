@@ -1,0 +1,293 @@
+---
+import Image from "astro/components/Image.astro";
+import rayo1 from "../assets/icons/rayo1.svg";
+import rayo2 from "../assets/icons/rayo2.svg";
+import bgOfertas from "../assets/background/bg-ofertas.svg";
+import PlanCard from "./PlanCard.astro";
+
+// Sección 1 (actual)
+const plansPage1 = [
+  {
+    name: "PRO5G Start",
+    price: "$69.99",
+    mb1: "100 MB",
+    mb2: "20 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+  {
+    name: "PRO5G Boost",
+    price: "$79.99",
+    mb1: "150 MB",
+    mb2: "30 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+  {
+    name: "PRO5G Turbo",
+    price: "$99.99",
+    mb1: "200 MB",
+    mb2: "60 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+  {
+    name: "PRO5G Ultra",
+    price: "$110.99",
+    mb1: "350 MB",
+    mb2: "80 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+];
+
+// Sección 2 (nuevos planes)
+const plansPage2 = [
+  {
+    name: "PROBasic",
+    price: "$49.99",
+    mb: "100 MB",
+    updown: "UP/DOWN",
+    tv: "+ TV $ 89.99",
+  },
+  {
+    name: "PROAdVance",
+    price: "$59.99",
+    mb: "300 MB",
+    updown: "UP/DOWN",
+    tv: "+ TV $ 99.99",
+  },
+  {
+    name: "PROForce",
+    price: "$79.99",
+    mb: "500 MB",
+    updown: "UP/DOWN",
+    tv: "+ TV $ 119.99",
+  },
+  {
+    name: "PROElite",
+    price: "$89.99",
+    mb: "1000 MB",
+    updown: "UP/DOWN",
+    tv: "+ TV $ 129.99",
+  },
+];
+
+// Sección 3 (nuevos planes)
+const plansPage3 = [
+  {
+    name: "",
+    price: "$29.99",
+    mb1: "10 MB",
+    mb2: "5 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+  {
+    name: "",
+    price: "$39.99",
+    mb1: "15 MB",
+    mb2: "8 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+  {
+    name: "",
+    price: "$44.99",
+    mb1: "25 MB",
+    mb2: "10 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+  {
+    name: "",
+    price: "$49.99",
+    mb1: "30 MB",
+    mb2: "10 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+  {
+    name: "",
+    price: "$54.99",
+    mb1: "50 MB",
+    mb2: "20 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+  {
+    name: "",
+    price: "$79.99",
+    mb1: "100 MB",
+    mb2: "30 MB",
+    // updown: "UP/DOWN",
+    tv: "",
+  },
+];
+
+const planPages = [plansPage2, plansPage3, plansPage1];
+
+// src/components/Plans.astro
+---
+
+<section class="container mx-auto pb-20 py-2 relative overflow-hidden" id="plans">
+  <!-- Decorative lightning bolts -->
+  <div class="bg-white rounded-2xl py-8 relative overflow-hidden">
+    <Image
+      src={rayo1}
+      alt={"Rayo"}
+      class="absolute left-[-80px] md:left-0 top-[-50px] h-50 w-50 md:h-120 w-100"
+    />
+    <Image
+      src={rayo2}
+      alt={"Rayo"}
+      class="absolute right-[-80px] md:right-0 top-[-50px] h-50 w-50 md:h-120 w-100"
+    />
+
+    <div class="container mx-auto px-4 relative z-10">
+      <!-- Header -->
+      <div class="text-center mb-18">
+        <h2 class="text-4xl text-purple-500 font-bold mt-20 mb-2">Estas son nuestras ofertas</h2>
+        <div class="relative bg-[#8F4DEF] rounded-2xl inline-block px-8 py-4 mt-8 mb-6 overflow-hidden">
+    <Image src={bgOfertas} alt="bg-ofertas" class={"absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"} />
+    
+    <h1 id="plan-slogan" class="relative z-10 text-6xl sm:text-8xl font-bold text-white text-center">5G</h1>
+</div>
+        <p  class="text-[#8F4DEF] text-3xl">
+          Escoge el Plan que mejor se adapte a ti:
+        </p>
+      </div>
+
+      <!-- Plans Pages with pagination -->
+      <div id="plan-pages" class="max-w-7xl mx-auto">
+        {
+          planPages.map((page, pageIdx) => (
+            <div
+              class={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mb-8 ${
+                pageIdx === 0 ? "" : "hidden"
+              }`}
+              data-page={pageIdx}
+            >
+              {page.map((plan, idx) => (
+                <a class="group" href={`https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}`} target="_blank" >
+                  <PlanCard {...plan} idx={idx} total={page.length} />
+                </a>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Controls -->
+      <div id="plan-controls" class="flex items-center justify-center gap-4 mt-28 sm:mt-4 ">
+        <button
+          id="prevPlans"
+          class="px-4 py-2 rounded-full border border-[#8F4DEF] text-[#8F4DEF] hover:bg-[#8F4DEF] hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Anterior"
+        >
+          Anterior
+        </button>
+        <div id="plan-dots" class="flex items-center gap-2">
+          <button
+            class="w-2.5 h-2.5 rounded-full bg-[#8F4DEF] opacity-100 scale-110 transition"
+            data-index="0"
+            aria-label="Página 1"></button>
+          <button
+            class="w-2.5 h-2.5 rounded-full bg-[#8F4DEF] opacity-40 transition"
+            data-index="1"
+            aria-label="Página 2"></button>
+          <button
+            class="w-2.5 h-2.5 rounded-full bg-[#8F4DEF] opacity-40 transition"
+            data-index="2"
+            aria-label="Página 3"></button>
+        </div>
+        <button
+          id="nextPlans"
+          class="px-4 py-2 rounded-full border border-[#8F4DEF] text-[#8F4DEF] hover:bg-[#8F4DEF] hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Siguiente"
+        >
+          Siguiente
+        </button>
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div class="text-center text-[#8F4DEF] text-lg space-y-1 mt-30 sm:mt-12 px-4">
+      <p>
+        <strong>Para contratos de 12 meses:</strong> Activación $25, Instalación $20 y Modem gratis.
+      </p>
+      <p>
+        <strong>Para contratos de 24 meses:</strong> Activación, instalación y módem completamente gratis.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const pagesWrapper = document.getElementById("plan-pages");
+  const pages = Array.from(pagesWrapper?.querySelectorAll("[data-page]") || []);
+  const prevBtn = document.getElementById("prevPlans") as HTMLButtonElement | null;
+  const nextBtn = document.getElementById("nextPlans") as HTMLButtonElement | null;
+  const dots = Array.from(
+    document.querySelectorAll("#plan-dots [data-index]")
+  ) as HTMLButtonElement[];
+  const slogans = [
+    'Fibra Óptica',
+    'Wireless',
+    'Plan 5G',
+  ];
+  const sloganEl = document.getElementById("plan-slogan") as HTMLParagraphElement | null;
+  let current = 0;
+
+  function render() {
+    pages.forEach((el, i) => {
+      if (i === current) {
+        el.classList.remove("hidden");
+      } else {
+        el.classList.add("hidden");
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      if (i === current) {
+        dot.classList.add("opacity-100", "scale-110");
+        dot.classList.remove("opacity-40");
+      } else {
+        dot.classList.remove("opacity-100", "scale-110");
+        dot.classList.add("opacity-40");
+      }
+    });
+
+    if (prevBtn) {
+      prevBtn.disabled = current === 0;
+    }
+    if (nextBtn) {
+      nextBtn.disabled = current === pages.length - 1;
+    }
+
+    if (sloganEl && slogans[current]) {
+      sloganEl.innerHTML = slogans[current];
+    }
+  }
+
+  prevBtn?.addEventListener("click", () => {
+    if (current > 0) {
+      current -= 1;
+      render();
+    }
+  });
+  nextBtn?.addEventListener("click", () => {
+    if (current < pages.length - 1) {
+      current += 1;
+      render();
+    }
+  });
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      current = i;
+      render();
+    });
+  });
+
+  render();
+</script>

@@ -1,0 +1,78 @@
+---
+import Image from "astro/components/Image.astro";
+import uparrow from "../assets/icons/arrow-white.svg";
+
+const { name, price, mb, tv, updown, idx = 0, total = 1, mb1, mb2 } = Astro.props;
+const marginClass = idx < total - 1 ? 'mb-25' : 'mb-0';
+const hasMb = !!(mb && String(mb).trim().length);
+---
+
+<div
+  class={`bg-white rounded-2xl p-6 py-8 text-center border-2 border-[#FD3CFC] relative w-full flex flex-col items-center ${marginClass} transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#8F4DEF] group-hover:to-[#FD3CFC] group-hover:shadow-2xl group-hover:scale-105`}
+>
+{
+  name.length>0&&(
+  <div
+    class="bg-[#10434C] text-white px-4 py-1 rounded-full text-sm font-bold absolute top-[-10px] left-1/2 transform -translate-x-1/2"
+  >
+    {name}
+  </div>
+  )
+}
+
+  <div class="text-6xl font-bold text-[#A649FF] group-hover:text-white mb-2 flex w-fit transition-colors duration-300">
+    <p>
+      {price.split(".")[0]}
+    </p>
+    <p class="text-5xl align-bottom">
+      .{price.split(".")[1]}
+    </p>
+    <!-- <span class="text-3xl">.{price.split('.')[1]}</span> -->
+  </div>
+  <div
+    class="absolute w-fit px-4 py-2 rounded-2xl bg-[#8F4DEF] bottom-[-48px] left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+  >
+    {hasMb ? (
+      <>
+        <p class="text-white font-bold text-4xl whitespace-nowrap">{mb}</p>
+        <div class="flex items-center">
+          <Image src={uparrow} alt={"arrow-up"} class={"h-4 w-4 mr-1 rotate-180 "} />
+          <Image src={uparrow} alt={"arrow-up"} class={"h-4 w-4"} />
+          <p class="text-xl text-white whitespace-nowrap font-light italic">{updown}</p>
+        </div>
+      </>
+    ) : (
+      <div class="flex flex-col items-center">
+        <div class="flex items-center mb-0 gap-2">
+          <div class="w-32">
+
+          <p class="text-white font-bold text-3xl whitespace-nowrap">{mb1}</p>
+          </div>
+          <Image src={uparrow} alt={"arrow-up"} class={"h-4 w-4 mr-2 rotate-180"} />
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-32">
+
+          <p class="text-white font-bold text-3xl whitespace-nowrap">{mb2}</p>
+          </div>
+          <Image src={uparrow} alt={"arrow-down"} class={"h-4 w-4 mr-2"} />
+        </div>
+      </div>
+    )}
+  </div>
+{
+  tv.length > 0 && (
+  <div
+    class="text-sm flex text-[#8F4DEF] absolute left-1/2 transform -translate-x-1/2 bottom-[-96px] w-fit"
+  >
+    <p class="text-xl text-[#8F4DEF] font-light mb-2 italic whitespace-nowrap">
+      {tv.split("$")[0]}
+    </p>
+    <p class="text-xl text-[#8F4DEF] font-bold mb-2 italic ml-1 whitespace-nowrap">
+      ${tv.split("$")[1]}
+    </p>
+  </div>
+  )
+}
+
+</div>

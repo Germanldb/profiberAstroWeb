@@ -1,0 +1,66 @@
+---
+import Image from "astro/components/Image.astro";
+import logo from "../assets/logo.svg"; // Adjust the path to your logo image
+// src/components/Header.astro
+---
+<header class="w-full text-white p-4">
+  <div class="w-full max-w-7xl mx-auto flex justify-between items-center px-4">
+    <div class="text-2xl font-bold">
+      <Image src={logo} alt={"Logo de ProFiber"} class={'h-8 w-auto'} />
+    </div>
+    <nav class="hidden xl:flex space-x-6">
+      <a href="#services" class="hover:text-pink-400">Servicios</a>
+      <a href="#about-us" class="hover:text-pink-400">Sobre Nosotros</a>
+      <a href="#plans" class="hover:text-pink-400">Planes</a>
+    </nav>
+    <div class="hidden xl:flex items-center space-x-4">
+      <p class="max-w-[160px] font-semibold text-right leading-tight"><span style="font-size: 0.65rem;">Comunicate ahora</span><br> (787) 822 8820</p>
+      <a href="https://23.138.80.181/cliente/login" target="_blank" class="bg-[#E041DF] text-white px-4 py-2 rounded-full hover:bg-pink-600 transition" style="text-transform: uppercase; font-weight: 600;">Accede a nuestros E-Bill</a>
+    </div>
+    <div class="xl:hidden">
+      <button id="mobile-menu-button" class="text-white focus:outline-none hover:cursor-pointer">
+        <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden xl:hidden bg-[#240541] border-t border-pink-500 mt-4">
+    <nav class="flex flex-col space-y-4 px-4 py-6">
+      <a href="#services" class="hover:text-pink-400 text-white text-lg">Servicios</a>
+      <a href="#about-us" class="hover:text-pink-400 text-white text-lg">Sobre Nosotros</a>
+      <a href="#plans" class="hover:text-pink-400 text-white text-lg">Planes</a>
+      <p class="text-white text-lg font-semibold">¡Llámanos ahora! 787-822-8820</p>
+      <a href="https://wa.me/17878228820?text=" target="_blank" class="border border-[#FD3CFC] border-2 text-white px-4 py-2 rounded-full hover:bg-pink-500 hover:text-white transition text-center">Comunícate Ahora</a>
+      <a href="https://23.138.80.181/cliente/login" target="_blank" class="bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600 transition text-center">Accede a nuestros E-Bill</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  mobileMenuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+    hamburgerIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  // Close mobile menu when clicking on a link
+  const mobileLinks = mobileMenu?.querySelectorAll('a');
+  mobileLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      hamburgerIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    });
+  });
+</script>
