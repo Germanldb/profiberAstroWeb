@@ -1,14 +1,16 @@
+// astro.config.mjs
 // @ts-check
 import { defineConfig } from 'astro/config';
-
 import tailwindcss from '@tailwindcss/vite';
-
-import netlify from '@astrojs/netlify';
+import node from '@astrojs/node'; 
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
+  adapter: node({
+    mode: 'standalone' // ⬅️ ¡CORRECCIÓN CLAVE!
+  }),
   vite: {
     plugins: [tailwindcss()]
   },
-  adapter: netlify() // Commented out for local development
 });
