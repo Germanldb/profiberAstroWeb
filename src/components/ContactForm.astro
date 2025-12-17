@@ -1,0 +1,176 @@
+---
+// src/components/ContactForm.astro
+import contact_form from "../assets/contactForm3.png";
+import Image from "astro/components/Image.astro";
+---
+<section class="relative text-white">
+  <div class="max-w-7xl mx-auto px-6 ">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Left: headline + form -->
+      <div class="grid grid-cols-1 gap-8 items-center">
+        <h2 class="text-5xl font-extrabold leading-tight mb-6">Trabajamos de la Mano Contigo</h2>
+        <p class="text-lg text-[#fff] mb-8 max-w-xl">Nuestro equipo de expertos llevará tu negocio al siguiente nivel, asesoramos en toda clase de instalaciones relacionadas a la fibra óptica o que tengan que ver con internet en cualquiera de sus niveles.</p>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden mb-6 p-4 bg-green-500/20 border-2 border-green-500 rounded-lg">
+          <p class="text-green-300 font-semibold">¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden mb-6 p-4 bg-red-500/20 border-2 border-red-500 rounded-lg">
+          <p class="text-red-300 font-semibold" id="errorText"></p>
+        </div>
+
+        <form id="contactForm" class="space-y-4 bg-transparent lg:w-full">
+          <input 
+            type="text" 
+            name="name"
+            id="name"
+            placeholder="Nombre y Apellido" 
+            required
+            class="w-full bg-transparent border-2 border-[#FD3CFC] rounded-lg px-4 py-3 placeholder:text-[#14081b] bg-white focus:outline-none focus:ring-2 focus:ring-[#b94bff]" 
+          />
+          
+          <input 
+            type="email" 
+            name="email"
+            id="email"
+            placeholder="Correo Electronico" 
+            required
+            class="w-full bg-transparent border-2 border-[#FD3CFC] rounded-lg px-4 py-3 placeholder:text-[#14081b] bg-white focus:outline-none focus:ring-2 focus:ring-[#b94bff]" 
+          />
+          
+          <input 
+            type="text" 
+            name="subject"
+            id="subject"
+            placeholder="Asunto" 
+            required
+            class="w-full bg-transparent border-2 border-[#FD3CFC] rounded-lg px-4 py-3 placeholder:text-[#14081b] bg-white focus:outline-none focus:ring-2 focus:ring-[#b94bff]" 
+          />
+          
+          <input 
+            type="tel" 
+            name="phone"
+            id="phone"
+            placeholder="Teléfono" 
+            class="w-full bg-transparent border-2 border-[#FD3CFC] rounded-lg px-4 py-3 placeholder:text-[#14081b] bg-white focus:outline-none focus:ring-2 focus:ring-[#b94bff]" 
+          />
+          
+          <textarea 
+            name="message"
+            id="message"
+            placeholder="Mensaje" 
+            rows="5" 
+            required
+            class="w-full bg-transparent border-2 border-[#FD3CFC] rounded-lg px-4 py-3 placeholder:text-[#14081b] bg-white focus:outline-none focus:ring-2 focus:ring-[#b94bff]"
+          ></textarea>
+
+          <div class="flex justify-end">
+            <button 
+              type="submit" 
+              id="submitBtn"
+              class="w-[150px] bg-transparent border-2 border-[#FD3CFC] text-white px-[20px] py-2 rounded-md hover:bg-[#FD3CFC] hover:text-[#1b0b24] transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span id="btnText">Enviar</span>
+              <span id="btnLoading" class="hidden">Enviando...</span>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div id="ocultar-img" class="flex flex-col items-center justify-center lg:mb-[0%]  md:mb-[-100%] md:ml-[-20px]">
+        <Image src={contact_form} alt={"Contact form"} class="md:max-w-[110%] lg:max-w-[100%]"/>
+      </div>
+    </div>
+
+  </div>
+</section>
+<style>
+  section {
+    background-image: url('../assets/background/network_back.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+@media(max-width: 765px){
+    #ocultar-img{
+    display: none;
+  }
+}
+</style>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement;
+  const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+  const btnText = document.getElementById('btnText') as HTMLSpanElement;
+  const btnLoading = document.getElementById('btnLoading') as HTMLSpanElement;
+  const successMessage = document.getElementById('successMessage') as HTMLDivElement;
+  const errorMessage = document.getElementById('errorMessage') as HTMLDivElement;
+  const errorText = document.getElementById('errorText') as HTMLParagraphElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Hide previous messages
+    successMessage.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+
+    // Get form data
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      subject: formData.get('subject') as string,
+      phone: formData.get('phone') as string,
+      message: formData.get('message') as string,
+    };
+
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.classList.add('hidden');
+    btnLoading.classList.remove('hidden');
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // Show success message
+        successMessage.classList.remove('hidden');
+        
+        // Reset form
+        form.reset();
+
+        // Scroll to success message
+        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          successMessage.classList.add('hidden');
+        }, 5000);
+      } else {
+        // Show error message
+        errorText.textContent = result.error || 'Error al enviar el mensaje. Por favor intente nuevamente.';
+        errorMessage.classList.remove('hidden');
+        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      errorText.textContent = 'Error de conexión. Por favor verifique su internet e intente nuevamente.';
+      errorMessage.classList.remove('hidden');
+      errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } finally {
+      // Reset button state
+      submitBtn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+    }
+  });
+</script>
