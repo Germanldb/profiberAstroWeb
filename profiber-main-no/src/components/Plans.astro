@@ -219,7 +219,6 @@ const planPages = [plansPage2, plansPage3, plansPage1];
             </div>
             
           )}
-          
         </div>
       ))
     }
@@ -270,8 +269,9 @@ const planPages = [plansPage2, plansPage3, plansPage1];
          <strong>Ciertas restricciones aplican.</strong>
       </p>
     </div>
-    <!-- Contenedor para descripción 5G: se mostrará debajo de los términos -->
-    <div id="plan-5g-paragraph" class="text-center text-[#8F4DEF] text-lg space-y-1 mt-6 sm:mt-4 px-4"></div>
+
+    <!-- Contenedor dinámico para la descripción según la página activa -->
+    <div id="plan-description" class="text-center text-[#8F4DEF] text-lg space-y-1 mt-6 sm:mt-4 px-4"></div>
   </div>
 </section>
 
@@ -289,25 +289,29 @@ const planPages = [plansPage2, plansPage3, plansPage1];
     'Plan 5G',
   ];
   const sloganEl = document.getElementById("plan-slogan") as HTMLParagraphElement | null;
-  const paragraph5GHtml = `
-    <hr />
-    <p>
-      <b>En Profiber nos esforzamos por ofrecerte el mejor servicio<br/>Para una experiencia transparente, te compartimos algunos detalles clave:</b>
-      <br /><br/>
-      Nos comprometemos a entregar la máxima velocidad posible dentro de nuestra red. Es importante saber que la velocidad efectiva puede variar debido a factores como la ubicación, la hora del día o el dispositivo utilizado. Las velocidades máximas anunciadas (ej. "hasta 250 Mbps") representan el potencial máximo de nuestra infraestructura, pero no son una garantía constante. En pruebas internas en nuestra área de cobertura, frecuentemente se alcanzan y superan estos valores.
-      <br />
-      Contrato de 12 o 24 meses, ideal si buscas la máxima rentabilidad. Incluye beneficios como instalación o equipo a costo reducido o gratuito, sujeto a un cargo por cancelación anticipada.
-      <br />
-      Cobertura: Nuestros servicios están disponibles en Puerto Rico donde nuestra infraestructura lo permita, priorizando el área oeste y noroeste (ej. Isabela, Aguadilla, Mayagüez). La disponibilidad exacta en tu dirección debe confirmarse, ya que la cobertura puede afectarse por condiciones locales y no está garantizada en todas las áreas.
-      <br />
-      ¿Tienes dudas? Nuestro equipo está para aclararlas.
-      <br />
-      Contáctanos para confirmar la cobertura en tu dirección exacta y conocer todos los detalles de los planes:
-      <br />
-      <b><a href="tel:+17878228820">(787) 822-8820</a></b>
-    </p>
-  `;
-  const paragraph5GEl = document.getElementById("plan-5g-paragraph") as HTMLDivElement | null;
+  const descriptions = [
+    '',
+    '',
+    `
+      <hr />
+      <p>
+        <b>En Profiber nos esforzamos por ofrecerte el mejor servicio<br/>Para una experiencia transparente, te compartimos algunos detalles clave:</b>
+        <br /><br />
+        Nos comprometemos a entregar la máxima velocidad posible dentro de nuestra red. Es importante saber que la velocidad efectiva puede variar debido a factores como la ubicación, la hora del día o el dispositivo utilizado. Las velocidades máximas anunciadas (ej. "hasta 250 Mbps") representan el potencial máximo de nuestra infraestructura, pero no son una garantía constante. En pruebas internas en nuestra área de cobertura, frecuentemente se alcanzan y superan estos valores.
+        <br />
+        Contrato de 12 o 24 meses, ideal si buscas la máxima rentabilidad. Incluye beneficios como instalación o equipo a costo reducido o gratuito, sujeto a un cargo por cancelación anticipada.
+        <br />
+        Cobertura: Nuestros servicios están disponibles en Puerto Rico donde nuestra infraestructura lo permita, priorizando el área oeste y noroeste (ej. Isabela, Aguadilla, Mayagüez). La disponibilidad exacta en tu dirección debe confirmarse, ya que la cobertura puede afectarse por condiciones locales y no está garantizada en todas las áreas.
+        <br />
+        ¿Tienes dudas? Nuestro equipo está para aclararlas.
+        <br />
+        Contáctanos para confirmar la cobertura en tu dirección exacta y conocer todos los detalles de los planes:
+        <br />
+        <b><a href="tel:+17878228820">(787) 822-8820</a></b>
+      </p>
+    `,
+  ];
+  const descriptionEl = document.getElementById("plan-description") as HTMLDivElement | null;
   let current = 0;
 
   function render() {
@@ -339,8 +343,8 @@ const planPages = [plansPage2, plansPage3, plansPage1];
     if (sloganEl && slogans[current]) {
       sloganEl.innerHTML = slogans[current];
     }
-    if (paragraph5GEl) {
-      paragraph5GEl.innerHTML = current === 2 ? paragraph5GHtml : '';
+    if (descriptionEl) {
+      descriptionEl.innerHTML = descriptions[current] || '';
     }
   }
 
