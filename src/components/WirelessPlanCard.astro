@@ -1,0 +1,79 @@
+---
+import termsPdf from "../assets/PROFIBER - TÉRMINOS Y CONDICIONES.pdf";
+
+const { price, mb1, mb2, idx = 0, total = 1 } = Astro.props;
+---
+
+<div
+  class="relative w-full flex flex-col items-center group transition-all duration-300 hover:-translate-y-2"
+>
+  <div class="relative w-full flex flex-col items-center z-0">
+    <!-- Main Card Body -->
+    <div
+      class="bg-white rounded-[40px] p-6 pt-8 pb-10 text-center border-[2px] border-[#FD3CFC] relative w-full flex flex-col items-center shadow-sm transition-all duration-300 group-hover:shadow-[0_10px_40px_-10px_rgba(253,60,252,0.3)]"
+    >
+      <!-- Términos Legales overlapping the border -->
+      <div
+        class="absolute -top-[10px] right-6 bg-white px-2 text-[14px] text-[#8F4DEF] font-bold z-20 hover:underline cursor-pointer"
+        style="font-family: 'Posterama 1927';"
+        onclick="event.stopPropagation()"
+      >
+        <a href={termsPdf} target="_blank" rel="noopener noreferrer">Términos Legales</a>
+      </div>
+
+      <!-- Price Header -->
+      <div class="flex justify-start w-full px-2">
+        <div
+          class="text-7xl font-bold text-[#8F4DEF] flex items-start"
+          style="font-family: 'Posterama 1927';"
+        >
+          <span class="text-4xl mt-2 mr-1">$</span>
+          <span class="text-[4.5rem] leading-none"
+            >{price.replace("$", "").split(".")[0]}</span
+          >
+          <span class="text-4xl mt-3"
+            >.{price.replace("$", "").split(".")[1] || "99"}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Purple MB Box Overlapping -->
+    <div
+      class="bg-[#8F4DEF] rounded-[24px] w-[100%] py-4 px-6 flex flex-col items-center justify-center -mt-8 relative z-10 shadow-lg"
+    >
+      <div class="flex items-center gap-2 mb-1">
+        <span
+          class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+          style="font-family: 'Posterama 1927';">{mb1.split(" ")[0]} MB</span
+        >
+        <span class="text-[12px] text-white uppercase font-bold italic mt-1"
+          >DOWN</span
+        >
+      </div>
+      <div class="flex items-center gap-2">
+        <span
+          class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+          style="font-family: 'Posterama 1927';">{mb2.split(" ")[0]} MB</span
+        >
+        <span class="text-[12px] text-white uppercase font-bold italic mt-1"
+          >UP</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Broadband Facts Button OUTSIDE -->
+  <div class="flex items-center gap-4 mt-6">
+    <div class="w-3.5 h-3.5 rounded-full bg-[#8F4DEF]"></div>
+    <div
+      class="border-[2px] border-[#8F4DEF] rounded-full px-8 py-2 flex items-center justify-center bg-white shadow-sm hover:bg-[#8F4DEF]/5 transition-colors cursor-pointer"
+    >
+      <span
+        class="text-[#8F4DEF] text-[13px] font-bold uppercase whitespace-nowrap"
+        style="font-family: 'Posterama 1927';">Broadband Facts</span
+      >
+    </div>
+    <div class="w-3.5 h-3.5 rounded-full bg-[#8F4DEF]"></div>
+  </div>
+</div>

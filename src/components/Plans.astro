@@ -4,6 +4,8 @@ import rayo1 from "../assets/icons/rayo1.svg";
 import rayo2 from "../assets/icons/rayo2.svg";
 import bgOfertas from "../assets/background/bg-ofertas.svg";
 import PlanCard from "./PlanCard.astro";
+import WirelessPlanCard from "./WirelessPlanCard.astro";
+import flechaVector from "../assets/flechaVector.png";
 
 // Sección 1 (actual)
 const plansPage1 = [
@@ -34,7 +36,7 @@ const plansPage1 = [
   {
     name: "PRO5G Ultra",
     price: "$110.99",
-    mb1: "300 MB",
+    mb1: "350 MB",
     mb2: "80 MB",
     // updown: "UP/DOWN",
     tv: "",
@@ -46,29 +48,29 @@ const plansPage2 = [
   {
     name: "PROBasic",
     price: "$49.99",
-    mb: "100 MB",
-    updown: "UP/DOWN",
+    mb1: "100 MB",
+    mb2: "20 MB",
     tv: "+ TV $ 89.99",
   },
   {
     name: "PROAdVance",
     price: "$59.99",
-    mb: "300 MB",
-    updown: "UP/DOWN",
+    mb1: "300 MB",
+    mb2: "60 MB",
     tv: "+ TV $ 99.99",
   },
   {
     name: "PROForce",
     price: "$79.99",
-    mb: "500 MB",
-    updown: "UP/DOWN",
+    mb1: "500 MB",
+    mb2: "100 MB",
     tv: "+ TV $ 119.99",
   },
   {
     name: "PROElite",
     price: "$89.99",
-    mb: "1000 MB",
-    updown: "UP/DOWN",
+    mb1: "1 GB",
+    mb2: "200 MB",
     tv: "+ TV $ 129.99",
   },
 ];
@@ -130,7 +132,10 @@ const planPages = [plansPage2, plansPage3, plansPage1];
 // src/components/Plans.astro
 ---
 
-<section class="container mx-auto pb-20 py-2 relative overflow-hidden" id="plans">
+<section
+  class="container mx-auto pb-20 py-2 relative overflow-hidden"
+  id="plans"
+>
   <!-- Decorative lightning bolts -->
   <div class="bg-white rounded-2xl py-8 relative overflow-hidden">
     <Image
@@ -144,89 +149,114 @@ const planPages = [plansPage2, plansPage3, plansPage1];
       class="absolute right-[-80px] md:right-0 top-[-50px] h-50 w-50 md:h-120 w-100"
     />
 
+    <Image
+      src={flechaVector}
+      alt={"flecha-vector"}
+      class="absolute bottom-5 right-5 h-10 w-10 z-0 opacity-80"
+    />
+
     <div class="container mx-auto px-4 relative z-10">
       <!-- Header -->
       <div class="text-center mb-18">
-        <h2 class="text-4xl text-purple-500 font-bold mt-20 mb-2">Estas son nuestras ofertas</h2>
-        <div class="relative bg-[#8F4DEF] rounded-2xl inline-block px-8 py-4 mt-8 mb-6 overflow-hidden">
-    <Image src={bgOfertas} alt="bg-ofertas" class={"absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"} />
-    
-    <h1 id="plan-slogan" class="relative z-10 text-5xl sm:text-6xl font-bold text-white text-center">5G</h1>
-</div>
-        <p  class="text-[#8F4DEF] text-3xl">
+        <h2 class="text-4xl text-purple-500 font-bold mt-20 mb-2">
+          Estas son nuestras ofertas
+        </h2>
+        <div
+          class="relative bg-[#8F4DEF] rounded-2xl inline-block px-8 py-4 mt-8 mb-6 overflow-hidden"
+        >
+          <Image
+            src={bgOfertas}
+            alt="bg-ofertas"
+            class={"absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"}
+          />
+
+          <h1
+            id="plan-slogan"
+            class="relative z-10 lg:text-6xl sm:text-4xl font-bold text-white text-center"
+          >
+            5G
+          </h1>
+        </div>
+        <p class="text-[#8F4DEF] text-3xl">
           Escoge el Plan que mejor se adapte a ti:
         </p>
       </div>
 
       <!-- Plans Pages with pagination -->
-      <div id="plan-pages" class="max-w-7xl mx-auto lg:mt-10 md:mb-9 mb-[130px]">
-    {
-      planPages.map((page, pageIdx) => (
-        <div
-          class={`mb-8 gap-8 ${pageIdx === 0 ? "" : "hidden"}`}
-          data-page={pageIdx}
-        >
-          {/* Lógica: Si la página tiene 6 elementos, aplicamos el diseño 4 + 2 */}
-          {page.length === 6 ? (
-            <>
-              {/* 1. Fila de 4 planes: Usamos una cuadrícula de 4 columnas */}
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 md:gap-10 md:pb-20px md:mb-[20px] mb-[50px]">
-                {page.slice(0, 4).map((plan, idx) => (
-                  <a 
-                    key={idx} 
-                    class="group md:pb-10 pb-10" 
-                    href={`https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}`} 
-                    target="_blank" 
-                  >
-                    <PlanCard {...plan} />
-                  </a>
-                ))}
-              </div>
+      <div
+        id="plan-pages"
+        class="max-w-7xl mx-auto lg:mt-10 md:mb-9 mb-[130px]"
+      >
+        {
+          planPages.map((page, pageIdx) => (
+            <div
+              class={`mb-8 gap-8 ${pageIdx === 0 ? "" : "hidden"}`}
+              data-page={pageIdx}
+            >
+              {/* Lógica: Si la página tiene 6 elementos, aplicamos el diseño 4 + 2 */}
+              {page.length === 6 ? (
+                <>
+                  {/* 1. Fila de 4 planes: Usamos una cuadrícula de 4 columnas */}
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 md:gap-10 md:pb-[20px] mb-[50px]">
+                    {page.slice(0, 4).map((plan, idx) => (
+                      <div
+                        key={idx}
+                        class="group cursor-pointer"
+                        onclick={`window.open('https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}', '_blank')`}
+                      >
+                        <WirelessPlanCard
+                          {...plan}
+                          idx={idx}
+                          total={page.length}
+                        />
+                      </div>
+                    ))}
+                  </div>
 
-              
-              <div class="md:flex md:justify-center lg:flex lg:justify-center sm:grid sm:grid-cols-1">
-               
-                <div class="grid grid-cols-1 lg:mt-[20px] md:mt-[20px] sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-8 sm:mb-[20px] sm:mt-[-30px]">
-                  {page.slice(4, 6).map((plan, idx) => (
-                    <a 
-                      key={idx + 4} 
-                      class="group pb-10" 
-                      href={`https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}`} 
-                      target="_blank" 
-                    >
-                      <PlanCard {...plan} />
-                    </a>
+                  <div class="md:flex md:justify-center lg:flex lg:justify-center sm:grid sm:grid-cols-1">
+                    <div class="grid grid-cols-1 lg:mt-[20px] md:mt-[20px] sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-8 sm:mb-[20px] sm:mt-[-30px]">
+                      {page.slice(4, 6).map((plan, idx) => (
+                        <div
+                          key={idx + 4}
+                          class="group cursor-pointer"
+                          onclick={`window.open('https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}', '_blank')`}
+                        >
+                          <WirelessPlanCard
+                            {...plan}
+                            idx={idx + 4}
+                            total={page.length}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                // Lógica para cualquier otra página (con 4 o más elementos)
+                // Si hay paginación, esta es la forma de mostrar las páginas > 0
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-8 pb-10">
+                  {page.map((plan, idx) => (
+                    <div key={idx}>
+                      <div
+                        class="group cursor-pointer"
+                        onclick={`window.open('https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}', '_blank')`}
+                      >
+                        <PlanCard {...plan} idx={idx} total={page.length} />
+                      </div>
+                    </div>
                   ))}
                 </div>
-              </div>
-            </>
-          ) : (
-            
-            // Lógica para cualquier otra página (con 4 o más elementos)
-            // Si hay paginación, esta es la forma de mostrar las páginas > 0
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:gap-8 lg:gap-8">
-              {page.map((plan, idx) => (
-                <div key={idx}>
-                  <a
-                    class="group"
-                    href={`https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}`}
-                    target="_blank"
-                  >
-                    <PlanCard {...plan} idx={idx} total={page.length} />
-                  </a>
-                </div>
-              ))}
+              )}
             </div>
-            
-          )}
-          
-        </div>
-      ))
-    }
-</div>
+          ))
+        }
+      </div>
 
       <!-- Controls -->
-      <div id="plan-controls" class="flex items-center justify-center gap-4 lg:mt-[10%] md:mt-[10%] ">
+      <div
+        id="plan-controls"
+        class="flex items-center justify-center gap-4 lg:mt-[0%] md:mt-[0%]"
+      >
         <button
           id="prevPlans"
           class="px-4 py-2 rounded-full border border-[#8F4DEF] text-[#8F4DEF] hover:bg-[#8F4DEF] hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
@@ -259,36 +289,46 @@ const planPages = [plansPage2, plansPage3, plansPage1];
     </div>
 
     <!-- Terms -->
-    <div class="text-center text-[#8F4DEF] text-lg space-y-1 mt-30 sm:mt-0 px-4">
+    <div
+      class="text-center text-[#8F4DEF] text-lg space-y-1 mt-30 sm:mt-0 px-4"
+    >
       <p>
-        <strong>Para contratos de 12 meses:</strong> Activación e Instalación $99.99 y Modem gratis.
+        <strong>Para contratos de 12 meses:</strong> Activación e Instalación $99.99
+        y Modem gratis.
       </p>
       <p>
-        <strong>Para contratos de 24 meses:</strong> Activación, instalación y módem completamente gratis.
+        <strong>Para contratos de 24 meses:</strong> Activación, instalación y módem
+        completamente gratis.
       </p>
       <p>
-         <strong>Ciertas restricciones aplican.</strong>
+        <strong>Ciertas restricciones aplican.</strong>
       </p>
     </div>
     <!-- Contenedor para descripción 5G: se mostrará debajo de los términos -->
-    <div id="plan-5g-paragraph" class="text-center text-[#8F4DEF] text-lg space-y-1 mt-6 sm:mt-4 px-4"></div>
+    <div
+      id="plan-5g-paragraph"
+      class="text-center text-[#8F4DEF] text-lg space-y-1 mt-6 sm:mt-4 px-4"
+    >
+    </div>
   </div>
 </section>
 
 <script>
   const pagesWrapper = document.getElementById("plan-pages");
   const pages = Array.from(pagesWrapper?.querySelectorAll("[data-page]") || []);
-  const prevBtn = document.getElementById("prevPlans") as HTMLButtonElement | null;
-  const nextBtn = document.getElementById("nextPlans") as HTMLButtonElement | null;
+  const prevBtn = document.getElementById(
+    "prevPlans",
+  ) as HTMLButtonElement | null;
+  const nextBtn = document.getElementById(
+    "nextPlans",
+  ) as HTMLButtonElement | null;
   const dots = Array.from(
-    document.querySelectorAll("#plan-dots [data-index]")
+    document.querySelectorAll("#plan-dots [data-index]"),
   ) as HTMLButtonElement[];
-  const slogans = [
-    'Fibra Óptica',
-    'Wireless',
-    'Plan 5G',
-  ];
-  const sloganEl = document.getElementById("plan-slogan") as HTMLParagraphElement | null;
+  const slogans = ["Fibra Óptica", "Wireless", "Plan 5G"];
+  const sloganEl = document.getElementById(
+    "plan-slogan",
+  ) as HTMLParagraphElement | null;
   const paragraph5GHtml = `
     <hr />
     <p>
@@ -307,7 +347,9 @@ const planPages = [plansPage2, plansPage3, plansPage1];
       <b><a href="tel:+17878228820">(787) 822-8820</a></b>
     </p>
   `;
-  const paragraph5GEl = document.getElementById("plan-5g-paragraph") as HTMLDivElement | null;
+  const paragraph5GEl = document.getElementById(
+    "plan-5g-paragraph",
+  ) as HTMLDivElement | null;
   let current = 0;
 
   function render() {
@@ -340,7 +382,7 @@ const planPages = [plansPage2, plansPage3, plansPage1];
       sloganEl.innerHTML = slogans[current];
     }
     if (paragraph5GEl) {
-      paragraph5GEl.innerHTML = current === 2 ? paragraph5GHtml : '';
+      paragraph5GEl.innerHTML = current === 2 ? paragraph5GHtml : "";
     }
   }
 

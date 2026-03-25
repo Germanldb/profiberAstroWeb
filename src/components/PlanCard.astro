@@ -1,78 +1,165 @@
 ---
 import Image from "astro/components/Image.astro";
 import uparrow from "../assets/icons/arrow-white.svg";
+import termsPdf from "../assets/PROFIBER - TÉRMINOS Y CONDICIONES.pdf";
 
-const { name, price, mb, tv, updown, idx = 0, total = 1, mb1, mb2 } = Astro.props;
-const marginClass = idx < total - 1 ? 'mb-25' : 'mb-0';
+const {
+  name = "",
+  price,
+  mb,
+  tv = "",
+  updown,
+  idx = 0,
+  total = 1,
+  mb1,
+  mb2,
+} = Astro.props;
 const hasMb = !!(mb && String(mb).trim().length);
 ---
 
 <div
-  class={`bg-white rounded-2xl p-6 py-8 text-center border-2 border-[#FD3CFC] relative w-full flex flex-col items-center ${marginClass} transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#8F4DEF] group-hover:to-[#FD3CFC] group-hover:shadow-2xl group-hover:scale-105`}
+  class="relative w-full flex flex-col items-center group transition-all duration-300 hover:-translate-y-2"
 >
-{
-  name.length>0&&(
-  <div
-    class="bg-[#10434C] text-white px-4 py-1 rounded-full text-sm font-bold absolute top-[-10px] left-1/2 transform -translate-x-1/2"
-  >
-    {name}
-  </div>
-  )
-}
-
-  <div class="text-6xl font-bold text-[#A649FF] group-hover:text-white mb-2 flex w-fit transition-colors duration-300">
-    <p>
-      {price.split(".")[0]}
-    </p>
-    <p class="text-5xl align-bottom">
-      .{price.split(".")[1]}
-    </p>
-    <!-- <span class="text-3xl">.{price.split('.')[1]}</span> -->
-  </div>
-  <div
-    class="absolute w-fit px-4 py-2 rounded-2xl bg-[#8F4DEF] bottom-[-48px] left-1/2 transform -translate-x-1/2 flex flex-col items-center"
-  >
-    {hasMb ? (
-      <>
-        <p class="text-white font-bold text-4xl whitespace-nowrap">{mb}</p>
-        <div class="flex items-center">
-          <Image src={uparrow} alt={"arrow-up"} class={"h-4 w-4 mr-1 rotate-180 "} />
-          <Image src={uparrow} alt={"arrow-up"} class={"h-4 w-4"} />
-          <p class="text-xl text-white whitespace-nowrap font-light italic">{updown}</p>
-        </div>
-      </>
-    ) : (
-      <div class="flex flex-col items-center">
-        <div class="flex items-center mb-0 gap-2">
-          <div class="w-32">
-
-          <p class="text-white font-bold text-3xl whitespace-nowrap">{mb1}</p>
+  <div class="relative w-full flex flex-col items-center z-0">
+    <!-- Main Card Body -->
+    <div
+      class="bg-white rounded-[40px] p-6 pt-8 pb-10 text-center border-[2px] border-[#FD3CFC] relative w-full flex flex-col items-center shadow-sm transition-all duration-300 group-hover:shadow-[0_10px_40px_-10px_rgba(253,60,252,0.3)]"
+    >
+      <!-- Name / Términos Legales -->
+      {
+        name && name.length > 0 ? (
+          <div
+            class="absolute -top-[14px] left-1/2 transform -translate-x-1/2 bg-[#10434C] text-white px-4 py-1 rounded-full text-[13px] font-bold z-20"
+            style="font-family: 'Posterama 1927';"
+          >
+            {name}
           </div>
-          <Image src={uparrow} alt={"arrow-up"} class={"h-4 w-4 mr-2 rotate-180"} />
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-32">
-
-          <p class="text-white font-bold text-3xl whitespace-nowrap">{mb2}</p>
+        ) : (
+          <div
+            class="absolute -top-[10px] right-6 bg-white px-2 text-[14px] text-[#8F4DEF] font-bold z-20 hover:underline cursor-pointer"
+            style="font-family: 'Posterama 1927';"
+            onclick="event.stopPropagation()"
+          >
+            <a href={termsPdf} target="_blank" rel="noopener noreferrer">
+              Términos Legales
+            </a>
           </div>
-          <Image src={uparrow} alt={"arrow-down"} class={"h-4 w-4 mr-2"} />
+        )
+      }
+
+      <!-- Price Header -->
+      <div class="flex justify-center w-full px-2">
+        <div
+          class="text-7xl font-bold text-[#8F4DEF] flex items-start"
+          style="font-family: 'Posterama 1927';"
+        >
+          <span class="text-4xl mt-2 mr-1">$</span>
+          <span class="text-[4.5rem] leading-none"
+            >{price.replace("$", "").split(".")[0]}</span
+          >
+          <span class="text-4xl mt-3"
+            >.{price.replace("$", "").split(".")[1] || "99"}</span
+          >
         </div>
       </div>
-    )}
-  </div>
-{
-  tv.length > 0 && (
-  <div
-    class="text-sm flex text-[#8F4DEF] absolute left-1/2 transform -translate-x-1/2 bottom-[-96px] w-fit"
-  >
-    <p class="text-xl text-[#8F4DEF] font-light mb-2 italic whitespace-nowrap">
-      {tv.split("$")[0]}
-    </p>
-    <p class="text-xl text-[#8F4DEF] font-bold mb-2 italic ml-1 whitespace-nowrap">
-      ${tv.split("$")[1]}
-    </p>
-  </div>
-  )
-}
+    </div>
 
+    <!-- Purple MB Box Overlapping -->
+    <div
+      class="bg-[#8F4DEF] rounded-[24px] w-[90%] py-4 px-6 flex flex-col items-start justify-center -mt-8 relative z-10 shadow-lg"
+    >
+      {
+        hasMb ? (
+          <div class="flex items-center gap-2 justify-center w-full">
+            <span
+              class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+              style="font-family: 'Posterama 1927';"
+            >
+              {mb.split(" ")[0]} <span class="text-2xl ml-1">MB</span>
+            </span>
+            <span class="text-[12px] text-white uppercase font-bold italic mt-1">
+              {updown || "UP/DOWN"}
+            </span>
+          </div>
+        ) : (
+          <div class="flex flex-col items-center w-full">
+            <div class="flex items-center gap-2 mb-1">
+              <span
+                class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+                style="font-family: 'Posterama 1927';"
+              >
+                {mb1?.split(" ")[0] || "0"}{" "}
+                <span class="text-2xl ml-1">{mb1?.split(" ")[1] || "MB"}</span>
+              </span>
+              <span class="text-[12px] text-white uppercase font-bold italic mt-1">
+                DOWN
+              </span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+                style="font-family: 'Posterama 1927';"
+              >
+                {mb2?.split(" ")[0] || "0"}{" "}
+                <span class="text-2xl ml-1">{mb2?.split(" ")[1] || "MB"}</span>
+              </span>
+              <span class="text-[12px] text-white uppercase font-bold italic mt-1">
+                UP
+              </span>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <!-- TV text if present -->
+  {
+    tv && tv.length > 0 && (
+      <div class="text-sm flex text-[#8F4DEF] w-fit mt-3 justify-center">
+        <p class="text-[18px] text-[#8F4DEF] font-light italic whitespace-nowrap">
+          {tv.split("$")[0]}
+        </p>
+        <p
+          class="text-[18px] text-[#8F4DEF] font-bold italic ml-1 whitespace-nowrap"
+          style="font-family: 'Posterama 1927';"
+        >
+          ${tv.split("$")[1]}
+        </p>
+      </div>
+    )
+  }
+
+  <!-- Broadband Facts Button OUTSIDE -->
+  <div
+    class={`flex items-center gap-4 ${tv && tv.length > 0 ? "mt-3" : "mt-6"}`}
+  >
+    <div class="w-3.5 h-3.5 rounded-full bg-[#8F4DEF]"></div>
+    <div
+      class="border-[2px] border-[#8F4DEF] rounded-full px-8 py-2 flex items-center justify-center bg-white shadow-sm hover:bg-[#8F4DEF]/5 transition-colors cursor-pointer"
+    >
+      <span
+        class="text-[#8F4DEF] text-[13px] font-bold uppercase whitespace-nowrap"
+        style="font-family: 'Posterama 1927';"
+      >
+        Broadband Facts
+      </span>
+    </div>
+    <div class="w-3.5 h-3.5 rounded-full bg-[#8F4DEF]"></div>
+  </div>
+
+  <!-- Términos Legales at the bottom for Fibra/5G -->
+  {
+    name && name.length > 0 && (
+      <div
+        class="mt-4 text-[13px] text-[#8F4DEF] font-bold hover:underline cursor-pointer uppercase"
+        style="font-family: 'Posterama 1927';"
+        onclick="event.stopPropagation()"
+      >
+        <a href={termsPdf} target="_blank" rel="noopener noreferrer">
+          Términos Legales
+        </a>
+      </div>
+    )
+  }
 </div>
