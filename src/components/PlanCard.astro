@@ -1,165 +1,281 @@
 ---
-import Image from "astro/components/Image.astro";
-import uparrow from "../assets/icons/arrow-white.svg";
 import termsPdf from "../assets/PROFIBER - TÉRMINOS Y CONDICIONES.pdf";
+import Image from "astro/components/Image.astro";
 
 const {
   name = "",
   price,
   mb,
-  tv = "",
-  updown,
-  idx = 0,
-  total = 1,
   mb1,
   mb2,
+  idx = 0,
+  total = 1,
+  broadbandImage,
+  tv,
 } = Astro.props;
-const hasMb = !!(mb && String(mb).trim().length);
 ---
 
-<div
-  class="relative w-full flex flex-col items-center group transition-all duration-300 hover:-translate-y-2"
->
-  <div class="relative w-full flex flex-col items-center z-0">
-    <!-- Main Card Body -->
+<!-- Flip Card Wrapper -->
+<div class="plan-flip-wrapper relative w-full flex flex-col items-center">
+  <!-- FLIP SCENE: perspectiva 3D -->
+  <div
+    class="plan-flip-scene w-full transition-all duration-700"
+    style="perspective: 1300px;"
+  >
     <div
-      class="bg-white rounded-[40px] p-6 pt-8 pb-10 text-center border-[2px] border-[#FD3CFC] relative w-full flex flex-col items-center shadow-sm transition-all duration-300 group-hover:shadow-[0_10px_40px_-10px_rgba(253,60,252,0.3)]"
+      class="plan-flip-inner w-full relative"
+      style="transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.4,0.2,0.2,1);"
     >
-      <!-- Name / Términos Legales -->
-      {
-        name && name.length > 0 ? (
-          <div
-            class="absolute -top-[14px] left-1/2 transform -translate-x-1/2 bg-[#10434C] text-white px-4 py-1 rounded-full text-[13px] font-bold z-20"
-            style="font-family: 'Posterama 1927';"
-          >
-            {name}
-          </div>
-        ) : (
-          <div
-            class="absolute -top-[10px] right-6 bg-white px-2 text-[14px] text-[#8F4DEF] font-bold z-20 hover:underline cursor-pointer"
-            style="font-family: 'Posterama 1927';"
-            onclick="event.stopPropagation()"
-          >
-            <a href={termsPdf} target="_blank" rel="noopener noreferrer">
-              Términos Legales
-            </a>
-          </div>
-        )
-      }
-
-      <!-- Price Header -->
-      <div class="flex justify-center w-full px-2">
+      <!-- ── CARA FRONTAL ── -->
+      <div
+        class="plan-flip-front w-full flex flex-col items-center"
+        style="backface-visibility: hidden; -webkit-backface-visibility: hidden;"
+      >
+        <!-- Card Body → WhatsApp -->
         <div
-          class="text-7xl font-bold text-[#8F4DEF] flex items-start"
-          style="font-family: 'Posterama 1927';"
+          class="relative w-full flex flex-col items-center z-0 cursor-pointer group"
+          onclick={`window.open('https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${name}', '_blank')`}
         >
-          <span class="text-4xl mt-2 mr-1">$</span>
-          <span class="text-[4.5rem] leading-none"
-            >{price.replace("$", "").split(".")[0]}</span
+          <div
+            class="bg-white rounded-[40px] p-6 pt-8 pb-8 text-center border-[2px] border-[#FD3CFC] relative w-full flex flex-col items-center shadow-sm transition-all duration-300 group-hover:shadow-[0_10px_40px_-10px_rgba(253,60,252,0.3)]"
           >
-          <span class="text-4xl mt-3"
-            >.{price.replace("$", "").split(".")[1] || "99"}</span
-          >
-        </div>
-      </div>
-    </div>
+            <!-- Name Label (Pill) -->
+            {
+              name && name.length > 0 && (
+                <div
+                  class="absolute -top-[14px] left-1/2 transform -translate-x-1/2 bg-[#10434C] text-white px-4 py-1 rounded-full text-[13px] font-bold z-20"
+                  style="font-family: 'Posterama 1927';"
+                >
+                  {name}
+                </div>
+              )
+            }
 
-    <!-- Purple MB Box Overlapping -->
-    <div
-      class="bg-[#8F4DEF] rounded-[24px] w-[90%] py-4 px-6 flex flex-col items-start justify-center -mt-8 relative z-10 shadow-lg"
-    >
-      {
-        hasMb ? (
-          <div class="flex items-center gap-2 justify-center w-full">
+            <!-- Price Header -->
+            <div class="flex justify-center w-full px-2 mb-4">
+              <div
+                class="text-7xl font-bold text-[#8F4DEF] flex items-start"
+                style="font-family: 'Posterama 1927';"
+              >
+                <span class="text-4xl mt-2 mr-1">$</span>
+                <span class="text-[4.5rem] leading-none"
+                  >{price.replace("$", "").split(".")[0]}</span
+                >
+                <span class="text-4xl mt-3"
+                  >.{price.replace("$", "").split(".")[1] || "00"}</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Purple MB Box Overlapping (Speeds Inside!) -->
+          <div
+            class="bg-[#8F4DEF] rounded-[24px] w-[90%] py-4 px-6 flex flex-col items-center justify-center -mt-8 relative z-10 shadow-lg"
+          >
+            {
+              mb ? (
+                <div class="flex items-center gap-2">
+                  <span
+                    class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+                    style="font-family: 'Posterama 1927';"
+                  >
+                    {mb.split(" ")[0]} MB
+                  </span>
+                  <span class="text-[12px] text-white uppercase font-bold italic mt-1">
+                    UP/DOWN
+                  </span>
+                </div>
+              ) : (
+                <>
+                  <div class="flex items-center gap-2 mb-1">
+                    <span
+                      class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+                      style="font-family: 'Posterama 1927';"
+                    >
+                      {mb1?.split(" ")[0]} MB
+                    </span>
+                    <span class="text-[12px] text-white uppercase font-bold italic mt-1">
+                      DOWN
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+                      style="font-family: 'Posterama 1927';"
+                    >
+                      {mb2?.split(" ")[0]} MB
+                    </span>
+                    <span class="text-[12px] text-white uppercase font-bold italic mt-1">
+                      UP
+                    </span>
+                  </div>
+                </>
+              )
+            }
+          </div>
+        </div>
+
+        <!-- TV Info (if exists) -->
+        {
+          tv && tv.length > 0 && (
+            <div class="flex flex-row mt-4 justify-center">
+              <p class="text-[18px] text-[#8F4DEF] font-light italic whitespace-nowrap">
+                {tv.split("$")[0]}
+              </p>
+              <p
+                class="text-[18px] text-[#8F4DEF] font-bold italic ml-1 whitespace-nowrap"
+                style="font-family: 'Posterama 1927';"
+              >
+                ${tv.split("$")[1]}
+              </p>
+            </div>
+          )
+        }
+
+        <!-- Broadband Facts Button OUTSIDE -->
+        <div class="flex items-center gap-4 mt-6">
+          <div class="w-3.5 h-3.5 rounded-full bg-[#8F4DEF]"></div>
+          <button
+            type="button"
+            class="plan-flip-btn border-[2px] border-[#8F4DEF] rounded-full px-8 py-2 flex items-center justify-center bg-white shadow-sm hover:bg-[#8F4DEF] transition-colors cursor-pointer group/bb"
+          >
             <span
-              class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
+              class="text-[#8F4DEF] group-hover/bb:text-white text-[13px] font-bold uppercase whitespace-nowrap transition-colors"
               style="font-family: 'Posterama 1927';"
             >
-              {mb.split(" ")[0]} <span class="text-2xl ml-1">MB</span>
+              Broadband Facts
             </span>
-            <span class="text-[12px] text-white uppercase font-bold italic mt-1">
-              {updown || "UP/DOWN"}
-            </span>
-          </div>
-        ) : (
-          <div class="flex flex-col items-center w-full">
-            <div class="flex items-center gap-2 mb-1">
-              <span
-                class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
-                style="font-family: 'Posterama 1927';"
-              >
-                {mb1?.split(" ")[0] || "0"}{" "}
-                <span class="text-2xl ml-1">{mb1?.split(" ")[1] || "MB"}</span>
-              </span>
-              <span class="text-[12px] text-white uppercase font-bold italic mt-1">
-                DOWN
-              </span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span
-                class="text-[2.5rem] font-bold text-white leading-none tracking-wide"
-                style="font-family: 'Posterama 1927';"
-              >
-                {mb2?.split(" ")[0] || "0"}{" "}
-                <span class="text-2xl ml-1">{mb2?.split(" ")[1] || "MB"}</span>
-              </span>
-              <span class="text-[12px] text-white uppercase font-bold italic mt-1">
-                UP
-              </span>
-            </div>
-          </div>
-        )
-      }
-    </div>
-  </div>
+          </button>
+          <div class="w-3.5 h-3.5 rounded-full bg-[#8F4DEF]"></div>
+        </div>
 
-  <!-- TV text if present -->
-  {
-    tv && tv.length > 0 && (
-      <div class="text-sm flex text-[#8F4DEF] w-fit mt-3 justify-center">
-        <p class="text-[18px] text-[#8F4DEF] font-light italic whitespace-nowrap">
-          {tv.split("$")[0]}
-        </p>
-        <p
-          class="text-[18px] text-[#8F4DEF] font-bold italic ml-1 whitespace-nowrap"
-          style="font-family: 'Posterama 1927';"
-        >
-          ${tv.split("$")[1]}
-        </p>
+        {
+          name && name.length > 0 && (
+            <div
+              class="mt-4 text-[13px] text-[#8F4DEF] font-bold hover:underline cursor-pointer uppercase"
+              style="font-family: 'Posterama 1927';"
+            >
+              <a href={termsPdf} target="_blank" rel="noopener noreferrer">
+                Términos Legales
+              </a>
+            </div>
+          )
+        }
       </div>
-    )
-  }
 
-  <!-- Broadband Facts Button OUTSIDE -->
-  <div
-    class={`flex items-center gap-4 ${tv && tv.length > 0 ? "mt-3" : "mt-6"}`}
-  >
-    <div class="w-3.5 h-3.5 rounded-full bg-[#8F4DEF]"></div>
-    <div
-      class="border-[2px] border-[#8F4DEF] rounded-full px-8 py-2 flex items-center justify-center bg-white shadow-sm hover:bg-[#8F4DEF]/5 transition-colors cursor-pointer"
-    >
-      <span
-        class="text-[#8F4DEF] text-[13px] font-bold uppercase whitespace-nowrap"
-        style="font-family: 'Posterama 1927';"
-      >
-        Broadband Facts
-      </span>
-    </div>
-    <div class="w-3.5 h-3.5 rounded-full bg-[#8F4DEF]"></div>
-  </div>
-
-  <!-- Términos Legales at the bottom for Fibra/5G -->
-  {
-    name && name.length > 0 && (
+      <!-- ── CARA TRASERA (110% width, No shadow) ── -->
       <div
-        class="mt-4 text-[13px] text-[#8F4DEF] font-bold hover:underline cursor-pointer uppercase"
-        style="font-family: 'Posterama 1927';"
-        onclick="event.stopPropagation()"
+        class="plan-flip-back absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full flex flex-col items-center justify-start pointer-events-none opacity-0 transition-opacity duration-300"
+        style="backface-visibility: hidden; -webkit-backface-visibility: hidden; transform: rotateY(180deg);"
       >
-        <a href={termsPdf} target="_blank" rel="noopener noreferrer">
-          Términos Legales
-        </a>
+        <div class="bg-white rounded-[40px] w-full h-full p-0 relative">
+          {
+            broadbandImage ? (
+              <Image
+                src={broadbandImage}
+                alt={`Broadband Facts - ${name}`}
+                class="w-full h-full object-contain rounded-[20px]"
+              />
+            ) : (
+              <div class="w-full h-full flex items-center justify-center text-[#8F4DEF] font-bold p-8 text-center text-xl">
+                Próximamente estaremos actualizando la información de este plan.
+              </div>
+            )
+          }
+        </div>
       </div>
-    )
+    </div><!-- /flip-inner -->
+  </div><!-- /flip-scene -->
+
+  <!-- Volver button: OUTSIDE -->
+  <button
+    type="button"
+    class="plan-flip-back-btn mt-6 hidden bg-[#8F4DEF] hover:bg-[#FD3CFC] text-white px-8 py-2 rounded-full text-[13px] font-bold uppercase transition-colors shadow-md z-[100]"
+    style="font-family: 'Posterama 1927';"
+  >
+    ← Volver al plan
+  </button>
+</div><!-- /flip-wrapper -->
+
+<script>
+  function initPlanFlips() {
+    document
+      .querySelectorAll<HTMLElement>(".plan-flip-wrapper")
+      .forEach((wrapper) => {
+        const scene = wrapper.querySelector<HTMLElement>(".plan-flip-scene")!;
+        const inner = wrapper.querySelector<HTMLElement>(".plan-flip-inner")!;
+        const front = wrapper.querySelector<HTMLElement>(".plan-flip-front")!;
+        const back = wrapper.querySelector<HTMLElement>(".plan-flip-back")!;
+        const flipBtn = wrapper.querySelector<HTMLElement>(".plan-flip-btn");
+        const backBtn = wrapper.querySelector<HTMLElement>(
+          ".plan-flip-back-btn",
+        );
+
+        if (!inner || !front) return;
+
+        function getFrontHeight() {
+          return front.offsetHeight;
+        }
+
+        // Flip to back — expand scene (Sync with logic from Wireless)
+        flipBtn?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const frontH = getFrontHeight();
+          scene.style.height = frontH + "px";
+
+          requestAnimationFrame(() => {
+            const expandedH = Math.max(frontH * 2, 520);
+            scene.style.height = expandedH + "px";
+            if (back) {
+              back.style.height = expandedH + "px";
+              back.style.opacity = "1";
+              back.style.pointerEvents = "all";
+            }
+
+            inner.style.transform = "rotateY(180deg)";
+            backBtn?.classList.remove("hidden");
+            wrapper.style.zIndex = "50";
+            wrapper.classList.add("is-flipped");
+          });
+        });
+
+        // Flip back to front
+        backBtn?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          inner.style.transform = "rotateY(0deg)";
+          backBtn.classList.add("hidden");
+          wrapper.style.zIndex = "";
+          wrapper.classList.remove("is-flipped");
+
+          if (back) {
+            back.style.opacity = "0";
+            back.style.pointerEvents = "none";
+          }
+
+          setTimeout(() => {
+            scene.style.height = getFrontHeight() + "px";
+            setTimeout(() => {
+              if (!wrapper.classList.contains("is-flipped")) {
+                scene.style.height = "";
+              }
+            }, 700);
+          }, 400);
+        });
+
+        function syncHeight() {
+          if (!wrapper.classList.contains("is-flipped")) {
+            const h = getFrontHeight();
+            if (h > 0) scene.style.height = h + "px";
+          }
+        }
+        setTimeout(syncHeight, 100);
+        window.addEventListener("resize", syncHeight);
+      });
   }
-</div>
+
+  if (!(window as any).__planFlipsInitializedV2) {
+    initPlanFlips();
+    document.addEventListener("astro:page-load", initPlanFlips);
+    (window as any).__planFlipsInitializedV2 = true;
+  }
+</script>

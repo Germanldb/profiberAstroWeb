@@ -7,6 +7,20 @@ import PlanCard from "./PlanCard.astro";
 import WirelessPlanCard from "./WirelessPlanCard.astro";
 import flechaVector from "../assets/flechaVector.png";
 
+import probasicBroadband from "../assets/Broadband-plans/PROBASIC - BroadBand.jpg.jpeg";
+import proadvanceBroadband from "../assets/Broadband-plans/PROADVANCE - BroadBand.jpg.jpeg";
+import proforceBroadband from "../assets/Broadband-plans/PROFORCE - BroadBand.jpg.jpeg";
+import proeliteBroadband from "../assets/Broadband-plans/PROELITE - BroadBand.jpg.jpeg";
+import premierBroadband from "../assets/Broadband-plans/Premier-BroadBand.jpg.jpeg";
+import basicPlusBroadband from "../assets/Broadband-plans/Basic pluss-BroadBand .jpg.jpeg";
+import premierPlussBroadband from "../assets/Broadband-plans/Premier pluss-BroadBand.jpg.jpeg";
+import proBroadband from "../assets/Broadband-plans/PRO-BroadBand.jpg.jpeg";
+import proultraBroadband from "../assets/Broadband-plans/PROULTRA-BroadBand.jpg.jpeg";
+import pro5gStartBroadband from "../assets/Broadband-plans/PRO5G Start - Broadband.jpg.jpeg";
+import pro5gBoostBroadband from "../assets/Broadband-plans/PRO5G Boost - Broadband.jpg.jpeg";
+import pro5gTurboBroadband from "../assets/Broadband-plans/PRO5G Turbo - Broadband.jpg.jpeg";
+import pro5gUltraBroadband from "../assets/Broadband-plans/PRO5G Ultra - Broadband.jpg.jpeg";
+
 // Sección 1 (actual)
 const plansPage1 = [
   {
@@ -16,6 +30,7 @@ const plansPage1 = [
     mb2: "20 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: pro5gStartBroadband,
   },
   {
     name: "PRO5G Boost",
@@ -24,6 +39,7 @@ const plansPage1 = [
     mb2: "30 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: pro5gBoostBroadband,
   },
   {
     name: "PRO5G Turbo",
@@ -32,6 +48,7 @@ const plansPage1 = [
     mb2: "60 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: pro5gTurboBroadband,
   },
   {
     name: "PRO5G Ultra",
@@ -40,6 +57,7 @@ const plansPage1 = [
     mb2: "80 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: pro5gUltraBroadband,
   },
 ];
 
@@ -51,6 +69,7 @@ const plansPage2 = [
     mb1: "100 MB",
     mb2: "20 MB",
     tv: "+ TV $ 89.99",
+    broadbandImage: probasicBroadband,
   },
   {
     name: "PROAdVance",
@@ -58,6 +77,7 @@ const plansPage2 = [
     mb1: "300 MB",
     mb2: "60 MB",
     tv: "+ TV $ 99.99",
+    broadbandImage: proadvanceBroadband,
   },
   {
     name: "PROForce",
@@ -65,6 +85,7 @@ const plansPage2 = [
     mb1: "500 MB",
     mb2: "100 MB",
     tv: "+ TV $ 119.99",
+    broadbandImage: proforceBroadband,
   },
   {
     name: "PROElite",
@@ -72,58 +93,56 @@ const plansPage2 = [
     mb1: "1 GB",
     mb2: "200 MB",
     tv: "+ TV $ 129.99",
+    broadbandImage: proeliteBroadband,
   },
 ];
 
 // Sección 3 (nuevos planes)
 const plansPage3 = [
   {
-    name: "",
-    price: "$29.99",
-    mb1: "10 MB",
-    mb2: "5 MB",
-    // updown: "UP/DOWN",
-    tv: "",
-  },
-  {
-    name: "",
+    name: "Basic",
     price: "$39.99",
     mb1: "15 MB",
     mb2: "8 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: basicPlusBroadband,
   },
   {
-    name: "",
+    name: "Premier",
     price: "$44.99",
     mb1: "25 MB",
     mb2: "10 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: premierBroadband,
   },
   {
-    name: "",
+    name: "Premier Pluss",
     price: "$49.99",
     mb1: "30 MB",
     mb2: "10 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: premierPlussBroadband,
   },
   {
-    name: "",
+    name: "PROULTRA",
     price: "$54.99",
     mb1: "50 MB",
     mb2: "20 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: proultraBroadband,
   },
   {
-    name: "",
+    name: "PRO",
     price: "$79.99",
     mb1: "100 MB",
     mb2: "30 MB",
     // updown: "UP/DOWN",
     tv: "",
+    broadbandImage: proBroadband,
   },
 ];
 
@@ -194,16 +213,12 @@ const planPages = [plansPage2, plansPage3, plansPage1];
               data-page={pageIdx}
             >
               {/* Lógica: Si la página tiene 6 elementos, aplicamos el diseño 4 + 2 */}
-              {page.length === 6 ? (
+              {pageIdx === 1 ? (
                 <>
-                  {/* 1. Fila de 4 planes: Usamos una cuadrícula de 4 columnas */}
-                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 md:gap-10 md:pb-[20px] mb-[50px]">
-                    {page.slice(0, 4).map((plan, idx) => (
-                      <div
-                        key={idx}
-                        class="group cursor-pointer"
-                        onclick={`window.open('https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}', '_blank')`}
-                      >
+                  {/* 1. Fila superior: 3 planes */}
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-12 md:gap-10 md:pb-[10px] mb-[10px] max-w-5xl mx-auto">
+                    {page.slice(0, 3).map((plan, idx) => (
+                      <div class="group">
                         <WirelessPlanCard
                           {...plan}
                           idx={idx}
@@ -213,17 +228,14 @@ const planPages = [plansPage2, plansPage3, plansPage1];
                     ))}
                   </div>
 
+                  {/* 2. Fila inferior: 2 planes */}
                   <div class="md:flex md:justify-center lg:flex lg:justify-center sm:grid sm:grid-cols-1">
-                    <div class="grid grid-cols-1 lg:mt-[20px] md:mt-[20px] sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-8 sm:mb-[20px] sm:mt-[-30px]">
-                      {page.slice(4, 6).map((plan, idx) => (
-                        <div
-                          key={idx + 4}
-                          class="group cursor-pointer"
-                          onclick={`window.open('https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}', '_blank')`}
-                        >
+                    <div class="grid grid-cols-1 lg:mt-[40px] md:mt-[40px] sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-12 sm:mb-[20px] max-w-3xl mx-auto">
+                      {page.slice(3).map((plan, idx) => (
+                        <div class="group">
                           <WirelessPlanCard
                             {...plan}
-                            idx={idx + 4}
+                            idx={idx + 3}
                             total={page.length}
                           />
                         </div>
@@ -236,11 +248,8 @@ const planPages = [plansPage2, plansPage3, plansPage1];
                 // Si hay paginación, esta es la forma de mostrar las páginas > 0
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-8 pb-10">
                   {page.map((plan, idx) => (
-                    <div key={idx}>
-                      <div
-                        class="group cursor-pointer"
-                        onclick={`window.open('https://wa.me/17878228820?text= Me gustaria saber más sobre el plan ${plan.name}', '_blank')`}
-                      >
+                    <div>
+                      <div class="group">
                         <PlanCard {...plan} idx={idx} total={page.length} />
                       </div>
                     </div>
